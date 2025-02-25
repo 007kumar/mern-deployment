@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80  # Exposed service port
+      targetPort: 80  # Frontend container's port
+  type: LoadBalancer  # Exposes frontend to external users
+

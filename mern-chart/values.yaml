@@ -1,0 +1,56 @@
+# Global settings
+replicaCount: 2
+
+# Backend settings
+backend:
+  name: backend
+  image: 007kumar/backend:latest  # Replace with your Docker image
+  containerPort: 5000
+  servicePort: 5000
+
+# Frontend settings
+frontend:
+  name: frontend
+  image: 007kumar/frontend:latest  # Replace with your Docker image
+  containerPort: 80
+  servicePort: 80
+
+# MongoDB settings
+mongo:
+  name: mongo
+  image: mongo:latest
+  containerPort: 27017
+  servicePort: 27017
+
+# Service settings
+service:
+  port: 3000  # Define the correct port
+
+# Service Account settings
+serviceAccount:
+  create: true
+
+ingress:
+  enabled: true
+  host: my-mern-app.local
+  path: /
+  annotations: {}
+  rules:
+    - host: my-mern-app.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: backend-service
+                port:
+                  number: 80
+
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+

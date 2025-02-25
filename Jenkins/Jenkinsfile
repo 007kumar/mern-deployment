@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Build and Push') {
+            steps {
+                sh 'docker build -t your-dockerhub-username/frontend ./frontend'
+                sh 'docker push your-dockerhub-username/frontend'
+                sh 'docker build -t your-dockerhub-username/backend ./backend'
+                sh 'docker push your-dockerhub-username/backend'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'kubectl apply -f kubernetes/'
+            }
+        }
+    }
+}
+
